@@ -26,20 +26,28 @@ public class ComboLockDriver {
 
         //falg for while loop
         boolean flag = false;
-        
+
         //get the first number. Must be positive or 0.
         while (!flag) {
             try {
-                n1 = Integer.parseInt(JOptionPane.showInputDialog("Enter the first number in the combo(must be a positive integer):"));
-                if (n1 >= 0) {
-                    flag = true;
-                } else {//keep looping if number is negative
-                    flag = false;
+                String input = JOptionPane.showInputDialog("Enter the first number in the combo(must be a positive integer):");
+
+                if (input != null) {
+
+                    n1 = Integer.parseInt(input);
+                    if (n1 >= 0) {
+                        flag = true;
+                    } else {//keep looping if number is negative
+                        System.err.println("Invalid input");
+                        flag = false;
+                    }
+                } else {
+                    System.exit(0);
                 }
-            } catch (NumberFormatException nfe) {//keep looping until valid input
-                System.err.println("Invalid input");
             } catch (NullPointerException npe) {//exit program if cancel clicked
                 System.exit(0);
+            } catch (NumberFormatException nfe) {//keep looping until valid input
+                System.err.println("Invalid input");
             }
         }
 
@@ -47,16 +55,24 @@ public class ComboLockDriver {
         flag = false;
         while (!flag) {
             try {
-                n2 = Integer.parseInt(JOptionPane.showInputDialog("Enter the second number in the combo(must be a positive integer):"));
-                if (n2 >= 0) {
-                    flag = true;
+                String input = JOptionPane.showInputDialog("Enter the second number in the combo(must be a positive integer):");
+
+                if (input != null) {
+
+                    n2 = Integer.parseInt(input);
+                    if (n2 >= 0) {
+                        flag = true;
+                    } else {//keep looping if number is negative
+                        System.err.println("Invalid input");
+                        flag = false;
+                    }
                 } else {
-                    flag = false;
+                    System.exit(0);
                 }
-            } catch (NumberFormatException nfe) {
-                System.err.println("Invalid input");
-            } catch (NullPointerException npe) {
+            } catch (NullPointerException npe) {//exit program if cancel clicked
                 System.exit(0);
+            } catch (NumberFormatException nfe) {//keep looping until valid input
+                System.err.println("Invalid input");
             }
         }
 
@@ -64,16 +80,24 @@ public class ComboLockDriver {
         flag = false;
         while (!flag) {
             try {
-                n3 = Integer.parseInt(JOptionPane.showInputDialog("Enter the third number in the combo(must be a positive integer):"));
-                if (n3 >= 0) {
-                    flag = true;
+                String input = JOptionPane.showInputDialog("Enter the third number in the combo(must be a positive integer):");
+
+                if (input != null) {
+
+                    n3 = Integer.parseInt(input);
+                    if (n3 >= 0) {
+                        flag = true;
+                    } else {//keep looping if number is negative
+                        System.err.println("Invalid input");
+                        flag = false;
+                    }
                 } else {
-                    flag = false;
+                    System.exit(0);
                 }
-            } catch (NumberFormatException nfe) {
-                System.err.println("Invalid input");
-            } catch (NullPointerException npe) {
+            } catch (NullPointerException npe) {//exit program if cancel clicked
                 System.exit(0);
+            } catch (NumberFormatException nfe) {//keep looping until valid input
+                System.err.println("Invalid input");
             }
         }
 
@@ -89,29 +113,29 @@ public class ComboLockDriver {
                         + "separated by dashes(ex. 1-3-47)").split("-");//get input and split on dashes
 
                 int[] combo = new int[3];
-                
-                for(int i = 0; i < inputs.length; i++){
+
+                for (int i = 0; i < inputs.length; i++) {
                     combo[i] = Integer.parseInt(inputs[i]);//try to convert to integers
                 }
-                
+
                 flag = true;
-                
-                if(lock1.unlock(combo)){//try to unlock the lock
+
+                if (lock1.unlock(combo)) {//try to unlock the lock
                     System.out.println("The lock is unlocked!");
-                }else{
+                } else {
                     System.out.println("The lock is not unlocked. The combo is: ");
-                    System.out.println(lock1.getCombo().toString());//tell user combo
+                    System.out.println(lock1.getCombo()[0] + " " + lock1.getCombo()[1] + " " + lock1.getCombo()[2]);//tell user combo
                 }
-                
+
             } catch (NumberFormatException nfe) {
                 System.err.println("Invalid input. Try again.");
             } catch (NullPointerException npe) {
                 System.exit(0);
-            } catch (IndexOutOfBoundsException ioobe){
+            } catch (IndexOutOfBoundsException ioobe) {
                 System.err.println("Invalid input. Try again.");
             }
         }
-        
+
         //second lock with random combo
         lock2 = new ComboLock();
 
@@ -120,26 +144,32 @@ public class ComboLockDriver {
         //same as first lock
         while (!flag) {
             try {
-                String[] inputs = JOptionPane.showInputDialog("Try to unlock the lock!\nEnter the combo "
-                        + "separated by dashes(ex. 1-3-47)").split("-");
+                String input = JOptionPane.showInputDialog("Try to unlock the lock!\nEnter the combo "
+                            + "separated by dashes(ex. 1-3-47)");
+                if (input != null) {
+                    String[] inputs = input.split("-");
 
-                int[] combo = new int[inputs.length];
-                
-                for(int i = 0; i < inputs.length; i++){
-                    combo[i] = Integer.parseInt(inputs[i]);
-                }
-                
-                if(lock2.unlock(combo)){
-                    System.out.println("The lock is unlocked!");
+                    int[] combo = new int[inputs.length];
+
+                    for (int i = 0; i < inputs.length; i++) {
+                        combo[i] = Integer.parseInt(inputs[i]);
+                    }
+
+                    if (lock2.unlock(combo)) {
+                        System.out.println("The lock is unlocked!");
+                    } else {
+                        System.out.println("The lock is not unlocked. The combo is: ");
+                        System.out.println(lock2.getCombo()[0] + " " + lock2.getCombo()[1] + " " + lock2.getCombo()[2]);
+                    }
                 }else{
-                    System.out.println("The lock is not unlocked.");
+                    System.exit(0);
                 }
                 flag = true;
             } catch (NumberFormatException nfe) {
                 System.err.println("Invalid input. Try again.");
             } catch (NullPointerException npe) {
                 System.exit(0);
-            } catch (IndexOutOfBoundsException ioobe){
+            } catch (IndexOutOfBoundsException ioobe) {
                 System.err.println("Invalid input. Try again.");
             }
         }
