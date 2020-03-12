@@ -114,7 +114,7 @@ public class ComboLockDriver {
 
                 int[] combo = new int[3];
 
-                for (int i = 0; i < inputs.length; i++) {
+                for (int i = 0; i < combo.length; i++) {
                     combo[i] = Integer.parseInt(inputs[i]);//try to convert to integers
                 }
 
